@@ -3,55 +3,66 @@ import { Button } from "./button";
 import styled from "styled-components";
 import { useState } from "react";
 import Select from 'react-select'
+import { income, spending } from "./dataset";
+import firebase from 'firebase';
+
+const firebaseConfig = {
+    apiKey: "AIzaSyB_9FP45IQqwilhyK7PY8vE-9g4qO4UmOQ",
+    authDomain: "management-app-5d601.firebaseapp.com",
+    projectId: "management-app-5d601",
+    storageBucket: "management-app-5d601.appspot.com",
+    messagingSenderId: "991225508251",
+    appId: "1:991225508251:web:8931bcdaad0199bbd8f13e",
+    measurementId: "G-Y5E5E7KCD7"
+  };
+  firebase.initializeApp(firebaseConfig);
+
 
 const FormButton = styled(Button)`
     width: 150px;
 `
 
-const spending = [
-    { value: 'foodExpenses ', label: '食費' },
-    { value: 'necessary', label: '日用品' },
-    { value: 'clothes', label: '衣服' },
-    { value: 'beauty ', label: '美容' },
-    { value: 'communicationFee ', label: '交際費' },
-    { value: 'medicalBills', label: '医療費' },
-    { value: 'educationFee ', label: '教育費' },
-    { value: 'utilityCosts', label: '光熱費' },
-    { value: 'transportation ', label: '交通費' },
-    { value: 'communicationCosts ', label: '通信費' },
-    { value: 'housingExpenses ', label: '住居費' },
-    { value: 'other', label: 'その他' },
-  ]
-
-const income = [
-    { value: 'salary ', label: '給料' },
-    { value: 'pocketMoney ', label: 'お小遣い' },
-    { value: 'bonus ', label: '賞与' },
-    { value: 'sideline', label: '副業' },
-    { value: 'investment ', label: '投資' },
-    { value: 'extraordinaryIncome ', label: '臨時収入' },
-    { value: 'other', label: 'その他' },
-]
-
-const AddItems = () => {
+const AddItems = ({date}) => {
     const [money, setMoney] = useState("");
     const [options, setOptions] = useState([])
-    
+    const [getValue, setGetValue] = useState([])
+
     const addMoney = (event) => {
         event.preventDefault();
         if(options === spending && money !== "") {
-            alert("減ります")
-        } else if(options === income && money !== "") {
-            const SpendingSum = () => {
-                const sum = [0]
-                sum.push(parseInt(money, 10))
-                console.log(sum)
-                // setText("")
-                // setMoney("")
+            const spendingSum = async () => {
+                const db = firebase.firestore();
+                getValue.money = parseInt(-money, 10)
+                const ref = await db.collection('spending').add({
+                    value: getValue.value,
+                    label: getValue.label,
+                    money: getValue.money,
+                    date: date,
+                })
+                const snapShot = await ref.get()
+                const data = snapShot.data()
+                console.log(ref.id, data);
+                setMoney("")
             }
-            SpendingSum()
+            spendingSum()
+        } else if(options === income && money !== "") {
+            const incomeSum = async () => {
+                const db = firebase.firestore();
+                getValue.money = parseInt(money, 10)
+                const ref = await db.collection('income').add({
+                    value: getValue.value,
+                    label: getValue.label,
+                    money: getValue.money,
+                    date: date,
+                })
+                const snapShot = await ref.get()
+                const data = snapShot.data()
+                console.log(ref.id, data);
+                setMoney("")
+            }
+            incomeSum()
         } else if(money === "0" || money === "") {
-            alert("金額を入力してください")
+            alert("金額を正しく入力してください")
         } else {
             alert("支出か収入か選択してください")
         }
@@ -65,7 +76,7 @@ const AddItems = () => {
                     <input type="radio" name="type" value="income" onChange={() => setOptions(income)} />収入
                 </div>
                 <div className="item">
-                    <Select className="input" name="type" options={options}/>
+                    <Select className="input" name="type" options={options} onChange={(value) => setGetValue(value)} placeholder="カテゴリー" />
                 </div>
                 <div className="item">
                     <label className="right">金額</label>
