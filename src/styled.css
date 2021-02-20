@@ -1,0 +1,73 @@
+.container {
+    margin:  0;
+    padding: 0;
+    background-color: rgb(247, 238, 201);
+    text-align: center;
+  }
+  
+  .header {
+    display: inline-block;
+    padding: 10px 50px;
+    margin: 0;
+    font-size: 50px;
+  }
+  
+  .expenseContainer {
+    display: inline-block;
+    margin: 30px 50px;
+    padding: 0 5px;
+    border: 2px solid;
+    border-color: rgb(223, 221, 221);
+    border-radius: 8px;
+    background-color: white;
+  }
+  
+  .expense {
+    display: inline-block;
+    padding-right: 250px;
+}
+
+.balance {
+      display: inline-block;
+      padding-right: 350px;
+      font-size: 20px;
+  }
+
+  .expenseCenter {
+      display: inline-block;
+      color: red;
+      font-size: 40px;
+      padding: 5px 0;
+      margin: 0;
+  }
+  
+  .expenseRight {
+    display: inline-block;
+    color: red;
+    font-size: 30px;
+    padding: 5px 0;
+    margin: 0;
+  }
+
+  .addItemContainer {
+      background-color: linen;
+      margin: 0;
+      padding: 5px 0;
+      text-align: center;
+  }
+
+  .item {
+      display: inline-block;
+      margin: 0 30px;
+  }
+
+  .right {
+      padding-right: 5px;
+      font-size: 18px;
+      padding: 8px 16px;
+  }
+
+  .input {
+      width: 250px;
+  }
+
