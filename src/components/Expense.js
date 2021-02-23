@@ -1,19 +1,21 @@
 import '../styled.css';
 
-const Expense = () => {
-    const SpendingSum = () => {
-        
-    }
+const Expense = ({incomeItems, spendingItems}) => {
+    const incomeBudgets = incomeItems.map(income => income.money);
+    const incomeBudget = incomeBudgets.reduce((sum, num) => sum + num, 0);
+    const spendingBudgets = spendingItems.map(income => income.money);
+    const spendingBudget = spendingBudgets.reduce((sum, num) => sum + num, 0);
+
 
     return (
         <div className="container">
             <div className="expenseContainer">
                 <p className="expense">支出</p>
-                <p className="expenseRight">-1,000円</p>
+                <p className="expenseRight">{spendingBudget.toLocaleString()}円</p>
             </div>
             <div className="expenseContainer">
                 <p className="expense">収入</p>
-                <p className="expenseRight">+1,000円</p>
+                <p className="expenseRight">+{incomeBudget.toLocaleString()}円</p>
             </div>
             <div className="expenseContainer">
                 <p className="balance">収支</p>

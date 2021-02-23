@@ -1,10 +1,11 @@
 import "../styled.css";
 import { Button } from "./button";
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from 'react-select'
 import { income, spending } from "./dataset";
 import firebase from 'firebase';
+import Expense from "./Expense";
 
 const firebaseConfig = {
     apiKey: "AIzaSyB_9FP45IQqwilhyK7PY8vE-9g4qO4UmOQ",
@@ -26,38 +27,49 @@ const AddItems = ({date}) => {
     const [money, setMoney] = useState("");
     const [options, setOptions] = useState([])
     const [getValue, setGetValue] = useState([])
+    const [incomeItems, setIncomeItems] = useState([])
+    const [spendingItems, setSpendingItems] = useState([])
 
     const addMoney = (event) => {
+        const db = firebase.firestore();
         event.preventDefault();
         if(options === spending && money !== "") {
             const spendingSum = async () => {
-                const db = firebase.firestore();
                 getValue.money = parseInt(-money, 10)
-                const ref = await db.collection('spending').add({
+                await db.collection('spending').add({
                     value: getValue.value,
                     label: getValue.label,
                     money: getValue.money,
                     date: date,
                 })
-                const snapShot = await ref.get()
-                const data = snapShot.data()
-                console.log(ref.id, data);
+                const snapShot = await db.collection('income').get();
+                snapShot.forEach(doc => {
+                    spendingItems.push({
+                        id: doc.id,
+                        ...doc.data(),
+                    });
+                })
+                setSpendingItems(spendingItems)
                 setMoney("")
             }
             spendingSum()
         } else if(options === income && money !== "") {
             const incomeSum = async () => {
-                const db = firebase.firestore();
                 getValue.money = parseInt(money, 10)
-                const ref = await db.collection('income').add({
+                await db.collection('income').add({
                     value: getValue.value,
                     label: getValue.label,
                     money: getValue.money,
                     date: date,
                 })
-                const snapShot = await ref.get()
-                const data = snapShot.data()
-                console.log(ref.id, data);
+                const snapShot = await db.collection('income').get();
+                snapShot.forEach(doc => {
+                    incomeItems.push({
+                        id: doc.id,
+                        ...doc.data(),
+                    });
+                })
+                setIncomeItems(incomeItems)
                 setMoney("")
             }
             incomeSum()
@@ -70,6 +82,7 @@ const AddItems = ({date}) => {
 
     return (
         <div className="addItemContainer">
+            <Expense incomeItems={incomeItems} spendingItems={spendingItems}/>
             <form onSubmit={addMoney}>
                 <div className="item">
                     <input type="radio" name="type" value="spending" onChange={() => setOptions(spending)} />支出

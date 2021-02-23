@@ -25,7 +25,6 @@ function App() {
   return (
     <div>
       <Header date={date} setPrevMonth={setPrevMonth} setNextMonth={setNextMonth}/>
-      <Expense />
       <AddItems date={date}/>
     </div>
   );
