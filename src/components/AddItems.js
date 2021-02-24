@@ -30,6 +30,37 @@ const AddItems = ({date}) => {
     const [incomeItems, setIncomeItems] = useState([])
     const [spendingItems, setSpendingItems] = useState([])
 
+    useEffect(() => {
+        firstSpendingSum()
+        firstIncomeSum()
+    }, [])
+    
+    const firstSpendingSum = async () => {
+        const db = firebase.firestore();
+        const snapShot = await db.collection('spending').get();
+        const spendingItems = []
+        snapShot.forEach(doc => {
+            spendingItems.push({
+                id: doc.id,
+                ...doc.data(),
+            });
+        })
+        setSpendingItems(spendingItems)
+    }
+
+    const firstIncomeSum = async () => {
+        const db = firebase.firestore();
+        const snapShot = await db.collection('income').get();
+        const incomeItems = []
+        snapShot.forEach(doc => {
+            incomeItems.push({
+                id: doc.id,
+                ...doc.data(),
+            });
+        })
+        setIncomeItems(incomeItems)
+    }
+
     const addMoney = (event) => {
         const db = firebase.firestore();
         event.preventDefault();
@@ -42,7 +73,8 @@ const AddItems = ({date}) => {
                     money: getValue.money,
                     date: date,
                 })
-                const snapShot = await db.collection('income').get();
+                const snapShot = await db.collection('spending').get();
+                const spendingItems = []
                 snapShot.forEach(doc => {
                     spendingItems.push({
                         id: doc.id,
@@ -63,6 +95,7 @@ const AddItems = ({date}) => {
                     date: date,
                 })
                 const snapShot = await db.collection('income').get();
+                const incomeItems = []
                 snapShot.forEach(doc => {
                     incomeItems.push({
                         id: doc.id,
