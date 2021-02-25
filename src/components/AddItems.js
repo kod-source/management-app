@@ -30,13 +30,15 @@ const AddItems = ({date}) => {
     const [incomeItems, setIncomeItems] = useState([])
     const [spendingItems, setSpendingItems] = useState([])
 
+    const db = firebase.firestore();
+
     useEffect(() => {
         firstSpendingSum()
         firstIncomeSum()
     }, [])
     
+    // リロード時の支出の合計
     const firstSpendingSum = async () => {
-        const db = firebase.firestore();
         const snapShot = await db.collection('spending').get();
         const spendingItems = []
         snapShot.forEach(doc => {
@@ -48,8 +50,48 @@ const AddItems = ({date}) => {
         setSpendingItems(spendingItems)
     }
 
+    // リロード時の収入の合計
     const firstIncomeSum = async () => {
-        const db = firebase.firestore();
+        const snapShot = await db.collection('income').get();
+        const incomeItems = []
+        snapShot.forEach(doc => {
+            incomeItems.push({
+                id: doc.id,
+                ...doc.data(),
+            });
+        })
+        setIncomeItems(incomeItems)
+    }
+
+    // 支出の合計
+    const spendingSum = async () => {
+        getValue.money = parseInt(-money, 10)
+        await db.collection('spending').add({
+            value: getValue.value,
+            label: getValue.label,
+            money: getValue.money,
+            date: date,
+        })
+        const snapShot = await db.collection('spending').get();
+        const spendingItems = []
+        snapShot.forEach(doc => {
+            spendingItems.push({
+                id: doc.id,
+                ...doc.data(),
+            });
+        })
+        setSpendingItems(spendingItems)
+    }
+
+    // 収入の合計
+    const incomeSum = async () => {
+        getValue.money = parseInt(money, 10)
+        await db.collection('income').add({
+            value: getValue.value,
+            label: getValue.label,
+            money: getValue.money,
+            date: date,
+        })
         const snapShot = await db.collection('income').get();
         const incomeItems = []
         snapShot.forEach(doc => {
@@ -62,52 +104,15 @@ const AddItems = ({date}) => {
     }
 
     const addMoney = (event) => {
-        const db = firebase.firestore();
         event.preventDefault();
-        if(options === spending && money !== "") {
-            const spendingSum = async () => {
-                getValue.money = parseInt(-money, 10)
-                await db.collection('spending').add({
-                    value: getValue.value,
-                    label: getValue.label,
-                    money: getValue.money,
-                    date: date,
-                })
-                const snapShot = await db.collection('spending').get();
-                const spendingItems = []
-                snapShot.forEach(doc => {
-                    spendingItems.push({
-                        id: doc.id,
-                        ...doc.data(),
-                    });
-                })
-                setSpendingItems(spendingItems)
-                setMoney("")
-            }
-            spendingSum()
-        } else if(options === income && money !== "") {
-            const incomeSum = async () => {
-                getValue.money = parseInt(money, 10)
-                await db.collection('income').add({
-                    value: getValue.value,
-                    label: getValue.label,
-                    money: getValue.money,
-                    date: date,
-                })
-                const snapShot = await db.collection('income').get();
-                const incomeItems = []
-                snapShot.forEach(doc => {
-                    incomeItems.push({
-                        id: doc.id,
-                        ...doc.data(),
-                    });
-                })
-                setIncomeItems(incomeItems)
-                setMoney("")
-            }
-            incomeSum()
-        } else if(money === "0" || money === "") {
+        if(!money || isNaN(money)) {
             alert("金額を正しく入力してください")
+        } else if(options === spending && money !== "") {
+            spendingSum()
+            setMoney("")
+        } else if(options === income && money !== "") {
+            incomeSum()
+            setMoney("")
         } else {
             alert("支出か収入か選択してください")
         }

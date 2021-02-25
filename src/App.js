@@ -1,7 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
 import Header from './components/Header';
-import Expense from './components/Expense';
 import AddItems from './components/AddItems';
 import { useState } from 'react';
 
