@@ -5,6 +5,7 @@ const Expense = ({incomeItems, spendingItems}) => {
     const incomeBudget = incomeBudgets.reduce((sum, num) => sum + num, 0);
     const spendingBudgets = spendingItems.map(income => income.money);
     const spendingBudget = spendingBudgets.reduce((sum, num) => sum + num, 0);
+    const budget = spendingBudget + incomeBudget
 
 
     return (
@@ -19,7 +20,7 @@ const Expense = ({incomeItems, spendingItems}) => {
             </div>
             <div className="expenseContainer">
                 <p className="balance">収支</p>
-                <p className="expenseCenter">1,000円</p>
+                <p className="expenseCenter">{budget.toLocaleString()}円</p>
             </div>
         </div>
     )

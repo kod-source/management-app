@@ -23,7 +23,7 @@ const FormButton = styled(Button)`
     width: 150px;
 `
 
-const AddItems = ({date}) => {
+const AddItems = ({date, spendingData, incomeData}) => {
     const [money, setMoney] = useState("");
     const [options, setOptions] = useState([])
     const [getValue, setGetValue] = useState([])
@@ -48,6 +48,7 @@ const AddItems = ({date}) => {
             });
         })
         setSpendingItems(spendingItems)
+        spendingData(spendingItems)
     }
 
     // リロード時の収入の合計
@@ -61,6 +62,7 @@ const AddItems = ({date}) => {
             });
         })
         setIncomeItems(incomeItems)
+        incomeData(incomeItems)
     }
 
     // 支出の合計
@@ -81,6 +83,7 @@ const AddItems = ({date}) => {
             });
         })
         setSpendingItems(spendingItems)
+        spendingData(spendingItems)
     }
 
     // 収入の合計
@@ -101,6 +104,7 @@ const AddItems = ({date}) => {
             });
         })
         setIncomeItems(incomeItems)
+        incomeData(incomeItems)
     }
 
     const addMoney = (event) => {
