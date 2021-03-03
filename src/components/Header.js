@@ -2,9 +2,8 @@ import "../styled.css";
 import { Button } from "./button";
 
 const Header = ({date, setPrevMonth, setNextMonth}) => {
-    const today = date;
-    const year = today.getFullYear();
-    const month = today.getMonth()+1;
+    const year = date.getFullYear();
+    const month = date.getMonth()+1;
     
     return (
         <div className="container">

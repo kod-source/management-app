@@ -28,7 +28,6 @@ function App() {
   const [expenses, setExpenses] = useState([])
   const [incomes, setIncomes] = useState([])
 
-  
   const setPrevMonth = () => {
     const year = date.getFullYear();
     const month = date.getMonth()-1;

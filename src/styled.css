@@ -35,7 +35,7 @@
 
   .expenseCenter {
       display: inline-block;
-      color: red;
+      color: black;
       font-size: 40px;
       padding: 5px 0;
       margin: 0;
@@ -43,7 +43,7 @@
   
   .expenseRight {
     display: inline-block;
-    color: red;
+    color: rgb(58, 222, 58);
     font-size: 30px;
     padding: 5px 0;
     margin: 0;

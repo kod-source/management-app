@@ -1,4 +1,9 @@
+import styled from 'styled-components';
 import '../styled.css';
+
+const RedP = styled.p`
+    color: red
+`
 
 const Expense = ({incomeItems, spendingItems}) => {
     const incomeBudgets = incomeItems.map(income => income.money);
@@ -12,7 +17,7 @@ const Expense = ({incomeItems, spendingItems}) => {
         <div className="container">
             <div className="expenseContainer">
                 <p className="expense">支出</p>
-                <p className="expenseRight">{spendingBudget.toLocaleString()}円</p>
+                <RedP className="expenseRight">{spendingBudget.toLocaleString()}円</RedP>
             </div>
             <div className="expenseContainer">
                 <p className="expense">収入</p>

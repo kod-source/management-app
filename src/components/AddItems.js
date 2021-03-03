@@ -35,11 +35,16 @@ const AddItems = ({date, spendingData, incomeData}) => {
     useEffect(() => {
         firstSpendingSum()
         firstIncomeSum()
-    }, [])
-    
+    }, [date])
+
+    const addDate = [date.getFullYear(), date.getMonth() +1]
+
     // リロード時の支出の合計
     const firstSpendingSum = async () => {
-        const snapShot = await db.collection('spending').get();
+        const snapShot = await db
+            .collection('spending')
+            .where("date", "==", [date.getFullYear(), date.getMonth() + 1])
+            .get();
         const spendingItems = []
         snapShot.forEach(doc => {
             spendingItems.push({
@@ -53,7 +58,10 @@ const AddItems = ({date, spendingData, incomeData}) => {
 
     // リロード時の収入の合計
     const firstIncomeSum = async () => {
-        const snapShot = await db.collection('income').get();
+        const snapShot = await db
+            .collection('income')
+            .where("date", "==", [date.getFullYear(), date.getMonth() + 1])
+            .get();
         const incomeItems = []
         snapShot.forEach(doc => {
             incomeItems.push({
@@ -72,9 +80,12 @@ const AddItems = ({date, spendingData, incomeData}) => {
             value: getValue.value,
             label: getValue.label,
             money: getValue.money,
-            date: date,
+            date: addDate,
         })
-        const snapShot = await db.collection('spending').get();
+        const snapShot = await db
+            .collection('spending')
+            .where("date", "==", [date.getFullYear(), date.getMonth() + 1])
+            .get();
         const spendingItems = []
         snapShot.forEach(doc => {
             spendingItems.push({
@@ -93,9 +104,12 @@ const AddItems = ({date, spendingData, incomeData}) => {
             value: getValue.value,
             label: getValue.label,
             money: getValue.money,
-            date: date,
+            date: addDate,
         })
-        const snapShot = await db.collection('income').get();
+        const snapShot = await db
+            .collection('income')
+            .where("date", "==", [date.getFullYear(), date.getMonth() + 1])
+            .get();
         const incomeItems = []
         snapShot.forEach(doc => {
             incomeItems.push({
@@ -107,6 +121,8 @@ const AddItems = ({date, spendingData, incomeData}) => {
         incomeData(incomeItems)
     }
 
+
+    
     const addMoney = (event) => {
         event.preventDefault();
         if(!money || isNaN(money)) {
