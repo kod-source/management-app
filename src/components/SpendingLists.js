@@ -1,10 +1,10 @@
 import '../styled.css';
 import SpendingList from './SpendingList';
 
-const SpendingLists = ({expenses}) => {
+const SpendingLists = ({expenses, date}) => {
     return (
         <div>
-            <SpendingList expenses={expenses} />
+            <SpendingList expenses={expenses} date={date} />
         </div>
     )
 }

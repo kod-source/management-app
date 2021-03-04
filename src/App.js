@@ -59,7 +59,7 @@ function App() {
         <ListsLi foucused={tab === "income"} onClick={() => setTab('income')}>収入</ListsLi>
       </ListsUl>
       {
-        tab === 'spending' ? <SpendingLists expenses={expenses} /> : <IncomeLists incomes={incomes} />
+        tab === 'spending' ? <SpendingLists expenses={expenses} date={date} /> : <IncomeLists incomes={incomes} />
       }
     </div>
   );

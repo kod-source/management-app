@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import '../styled.css';
 import { Button } from './button';
+import firebase from 'firebase';
 
 const GreenLi = styled.li`
     color: rgb(58, 222, 58);
@@ -11,8 +12,15 @@ const SpendingButton = styled(Button)`
 `
 
 const IncomeList = ({incomes}) => {
-    const spendingDelete = () => {
-        
+    const incomesDelete = async (id) => {
+        try {
+            const db = firebase.firestore();
+            await db.collection("income").doc(id).delete();
+            console.log("delete")
+            window.location.reload()
+        } catch (error) {
+            console.error(error);
+        }
     }
     return (
         <div>
@@ -22,7 +30,7 @@ const IncomeList = ({incomes}) => {
                         <ul className="listUl">
                             <li className="listLi">{income.label}</li>
                             <GreenLi className="listLi">{income.money.toLocaleString()}円</GreenLi>
-                            <SpendingButton onClick={spendingDelete}>削除</SpendingButton>
+                            <SpendingButton onClick={() => incomesDelete(income.id)}>削除</SpendingButton>
                         </ul>
                     )
                 })

@@ -23,29 +23,25 @@ const SpendingButton = styled(Button)`
 `
 
 const SpendingList = ({expenses}) => {
-    const expense = expenses.map(expense => expense.id)
-    // console.log(expenses)
-    const spendingDelete = async () => {
-        // try {
-        //     for (let i = 0; i < expense.length; i++) {
-        //         console.log(expense[i]);
-        //         const db = firebase.firestore();
-        //         await db.collection("spending").doc(expense[i]).delete();
-        //         console.log("delete")
-        //       }
-        // } catch (error) {
-        //     console.error(error);
-        // }
+    const spendingDelete = async (id) => {
+        try {
+            const db = firebase.firestore();
+            await db.collection("spending").doc(id).delete();
+            console.log("delete")
+            window.location.reload()
+        } catch (error) {
+            console.error(error);
+        }
     }
     return (
         <div>
             {
                 expenses.map(expense => {
                     return (
-                        <ul className="listUl" key={expense.id}>
+                        <ul className="listUl">
                             <li className={"listLi"}>{expense.label}</li>
                             <RedLi className={"listLi"}>{expense.money.toLocaleString()}円</RedLi>
-                            <SpendingButton onClick={spendingDelete}>削除</SpendingButton>
+                            <SpendingButton onClick={() => spendingDelete(expense.id)}>削除</SpendingButton>
                         </ul>
                     )
                 })
