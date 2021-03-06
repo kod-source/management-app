@@ -10,14 +10,14 @@ const Expense = ({incomeItems, spendingItems}) => {
     const incomeBudget = incomeBudgets.reduce((sum, num) => sum + num, 0);
     const spendingBudgets = spendingItems.map(income => income.money);
     const spendingBudget = spendingBudgets.reduce((sum, num) => sum + num, 0);
-    const budget = spendingBudget + incomeBudget
+    const budget = incomeBudget - spendingBudget
 
 
     return (
         <div className="container">
             <div className="expenseContainer">
                 <p className="expense">支出</p>
-                <RedP className="expenseRight">{spendingBudget.toLocaleString()}円</RedP>
+                <RedP className="expenseRight">-{spendingBudget.toLocaleString()}円</RedP>
             </div>
             <div className="expenseContainer">
                 <p className="expense">収入</p>

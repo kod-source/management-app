@@ -11,7 +11,7 @@ const ListsUl = styled.ul`
   margin: 0;
   justify-content: space-between;
   padding: 15px 550px 0;
-  border-bottom: 1px solid #E0E0E0;
+  border-bottom: 3px solid #E0E0E0;
 `
 
 const ListsLi = styled.li`
@@ -19,7 +19,7 @@ const ListsLi = styled.li`
   font-size: 23px;
   padding: 4px 12px;
   cursor: pointer;
-  border-bottom: ${props => props.foucused ? "2px solid #F44336" : "none"};
+  border-bottom: ${props => props.foucused ? "5px solid #F44336" : "none"};
 `
 
 function App() {

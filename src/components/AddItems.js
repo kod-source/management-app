@@ -75,7 +75,7 @@ const AddItems = ({date, spendingData, incomeData}) => {
 
     // 支出の合計
     const spendingSum = async () => {
-        getValue.money = parseInt(-money, 10)
+        getValue.money = parseInt(money, 10)
         await db.collection('spending').add({
             value: getValue.value,
             label: getValue.label,
