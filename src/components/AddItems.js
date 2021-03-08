@@ -37,13 +37,16 @@ const AddItems = ({date, spendingData, incomeData}) => {
         firstIncomeSum()
     }, [date])
 
-    const addDate = [date.getFullYear(), date.getMonth() +1]
+    const startData = new Date(date.getFullYear(), date.getMonth(), 1)
+    const endData = new Date(date.getFullYear(), date.getMonth() + 1, 0)
 
     // リロード時の支出の合計
     const firstSpendingSum = async () => {
         const snapShot = await db
             .collection('spending')
-            .where("date", "==", [date.getFullYear(), date.getMonth() + 1])
+            .orderBy('date')
+            .startAt(startData)
+            .endAt(endData)
             .get();
         const spendingItems = []
         snapShot.forEach(doc => {
@@ -60,7 +63,9 @@ const AddItems = ({date, spendingData, incomeData}) => {
     const firstIncomeSum = async () => {
         const snapShot = await db
             .collection('income')
-            .where("date", "==", [date.getFullYear(), date.getMonth() + 1])
+            .orderBy('date')
+            .startAt(startData)
+            .endAt(endData)
             .get();
         const incomeItems = []
         snapShot.forEach(doc => {
@@ -80,11 +85,13 @@ const AddItems = ({date, spendingData, incomeData}) => {
             value: getValue.value,
             label: getValue.label,
             money: getValue.money,
-            date: addDate,
+            date: date,
         })
         const snapShot = await db
             .collection('spending')
-            .where("date", "==", [date.getFullYear(), date.getMonth() + 1])
+            .orderBy('date')
+            .startAt(startData)
+            .endAt(endData)
             .get();
         const spendingItems = []
         snapShot.forEach(doc => {
@@ -104,11 +111,13 @@ const AddItems = ({date, spendingData, incomeData}) => {
             value: getValue.value,
             label: getValue.label,
             money: getValue.money,
-            date: addDate,
+            date: date,
         })
         const snapShot = await db
             .collection('income')
-            .where("date", "==", [date.getFullYear(), date.getMonth() + 1])
+            .orderBy('date')
+            .startAt(startData)
+            .endAt(endData)
             .get();
         const incomeItems = []
         snapShot.forEach(doc => {

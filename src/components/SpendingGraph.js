@@ -1,6 +1,7 @@
 import { Pie, PieChart, Tooltip } from "recharts";
 
 const SpendingGraph = ({expenses}) => {
+    // グラフで必要なデータのみ取得
     const graphData = expenses.reduce((prev, current) => {
 
         const element = prev.find(result => result.label === current.label);

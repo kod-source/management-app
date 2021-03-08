@@ -1,6 +1,7 @@
 import { Pie, PieChart, Tooltip } from "recharts";
 
 const IncomeGraph = ({incomes}) => {
+    // グラフで必要なデータのみ取得
     const graphData = incomes.reduce((prev, current) => {
 
         const element = prev.find(result => result.label === current.label);
@@ -16,15 +17,15 @@ const IncomeGraph = ({incomes}) => {
         return prev;
         
     }, []);
-
+    
     const sortData = graphData.sort(function(a, b) {
         if (a.money > b.money) {
             return -1;
         } else {
             return 1;
         }
-     });
-
+    });
+    
     return (
         <PieChart width={1440} height={400}>
             <Pie 

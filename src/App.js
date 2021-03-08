@@ -28,6 +28,7 @@ function App() {
   const [expenses, setExpenses] = useState([])
   const [incomes, setIncomes] = useState([])
 
+  // 先月のデータの取得
   const setPrevMonth = () => {
     const year = date.getFullYear();
     const month = date.getMonth()-1;
@@ -35,6 +36,7 @@ function App() {
     setDate(new Date(year, month, day));
   }
 
+  // 次月のデータの取得
   const setNextMonth = () => {
     const year = date.getFullYear();
     const month = date.getMonth()+1;
@@ -42,10 +44,12 @@ function App() {
     setDate(new Date(year, month, day));
   }
 
+  // 子のコンポーネントからデータをもらう
   const spendingData = (spendingData) => {
     setExpenses(spendingData)
   }
 
+  // 子のコンポーネントからデータをもらう
   const incomeData = (incomeData) => {
     setIncomes(incomeData)
   }
@@ -59,7 +63,7 @@ function App() {
         <ListsLi foucused={tab === "income"} onClick={() => setTab('income')}>収入</ListsLi>
       </ListsUl>
       {
-        tab === 'spending' ? <SpendingLists expenses={expenses} date={date} /> : <IncomeLists incomes={incomes} />
+        tab === 'spending' ? <SpendingLists expenses={expenses} /> : <IncomeLists incomes={incomes} />
       }
     </div>
   );
