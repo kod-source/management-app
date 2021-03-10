@@ -5,6 +5,7 @@ import { useState } from 'react';
 import SpendingLists from './components/SpendingLists';
 import IncomeLists from './components/IncomeLists';
 import styled from 'styled-components';
+import Calendars from './components/Calendars';
 
 const ListsUl = styled.ul`
   display: flex;
@@ -62,6 +63,7 @@ function App() {
         <ListsLi foucused={tab === "spending"} onClick={() => setTab('spending')}>支出</ListsLi>
         <ListsLi foucused={tab === "income"} onClick={() => setTab('income')}>収入</ListsLi>
       </ListsUl>
+      <Calendars date={date} expenses={expenses} incomes={incomes} />
       {
         tab === 'spending' ? <SpendingLists expenses={expenses} /> : <IncomeLists incomes={incomes} />
       }

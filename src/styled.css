@@ -25,20 +25,20 @@
   .expense {
     display: inline-block;
     padding-right: 250px;
-}
-
-.balance {
-      display: inline-block;
-      padding-right: 350px;
-      font-size: 20px;
+  }
+  
+  .balance {
+    display: inline-block;
+    padding-right: 350px;
+    font-size: 20px;
   }
 
   .expenseCenter {
-      display: inline-block;
-      color: black;
-      font-size: 40px;
-      padding: 5px 0;
-      margin: 0;
+    display: inline-block;
+    color: black;
+    font-size: 40px;
+    padding: 5px 0;
+    margin: 0;
   }
   
   .expenseRight {
