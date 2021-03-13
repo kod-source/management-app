@@ -57,13 +57,13 @@ function App() {
 
   return (
     <div>
-      <Header date={date} setPrevMonth={setPrevMonth} setNextMonth={setNextMonth}/>
+      <Header date={date} setPrevMonth={setPrevMonth} setNextMonth={setNextMonth} expenses={expenses} incomes={incomes} />
       <AddItems date={date} spendingData={spendingData} incomeData={incomeData}/>
       <ListsUl>
         <ListsLi foucused={tab === "spending"} onClick={() => setTab('spending')}>支出</ListsLi>
         <ListsLi foucused={tab === "income"} onClick={() => setTab('income')}>収入</ListsLi>
       </ListsUl>
-      <Calendars date={date} expenses={expenses} incomes={incomes} />
+      {/* <Calendars date={date} expenses={expenses} incomes={incomes} /> */}
       {
         tab === 'spending' ? <SpendingLists expenses={expenses} /> : <IncomeLists incomes={incomes} />
       }

@@ -6,12 +6,15 @@ const RedP = styled.p`
 `
 
 const Expense = ({incomeItems, spendingItems}) => {
-    const incomeBudgets = incomeItems.map(income => income.money);
-    const incomeBudget = incomeBudgets.reduce((sum, num) => sum + num, 0);
-    const spendingBudgets = spendingItems.map(income => income.money);
-    const spendingBudget = spendingBudgets.reduce((sum, num) => sum + num, 0);
-    const budget = incomeBudget - spendingBudget
+    const sum = (items) => {
+        const budgets = items.map(item => item.money);
+        const budget = budgets.reduce((sum, num) => sum + num, 0)
+        return budget
+    }
 
+    const incomeBudget = sum(incomeItems)
+    const spendingBudget = sum(spendingItems)
+    const budget = incomeBudget - spendingBudget
 
     return (
         <div className="container">

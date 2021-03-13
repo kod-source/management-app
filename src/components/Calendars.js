@@ -21,28 +21,24 @@ const Calendars = ({date, expenses, incomes}) => {
         const formatDate = String(year) + String(month) + String(day)
         let expenseSum = 0;
         let incomeSum = 0;
-        expenses.forEach(element => {
-            const getDates = element.date
-            const getDate = new Date(getDates.seconds * 1000);
-            const year = getDate.getFullYear();
-            const month = (`${getDate.getMonth() + 1}`).slice(-2);
-            const day = (`${getDate.getDate()}`).slice(-2);
-            const getTime = (year + month + day)
-            if(formatDate === getTime) {
-                expenseSum += element.money
-            }
-          });
-        incomes.forEach(element => {
-            const getDates = element.date
-            const getDate = new Date(getDates.seconds * 1000);
-            const year = getDate.getFullYear();
-            const month = (`${getDate.getMonth() + 1}`).slice(-2);
-            const day = (`${getDate.getDate()}`).slice(-2);
-            const getTime = (year + month + day)
-            if(formatDate === getTime) {
-                incomeSum += element.money
-            }
-          });
+
+        const calendarSum = (items, sum) => {
+            items.forEach(element => {
+                const getDates = element.date
+                const getDate = new Date(getDates.seconds * 1000);
+                const year = getDate.getFullYear();
+                const month = (`${getDate.getMonth() + 1}`).slice(-2);
+                const day = (`${getDate.getDate()}`).slice(-2);
+                const getTime = (year + month + day)
+                if (formatDate === getTime) {
+                    sum += element.money
+                }
+            })
+            return sum;
+        }
+        
+        expenseSum = calendarSum(expenses, expenseSum);
+        incomeSum = calendarSum(incomes, incomeSum)
         return (
             <div>
                 <RedP>-{expenseSum.toLocaleString()}</RedP>
