@@ -23,7 +23,6 @@ const Header = ({date, setPrevMonth, setNextMonth, expenses, incomes}) => {
     useEffect(() => {
       if (ref.current) ref.current.focus();
     })
-    
     const year = date.getFullYear();
     const month = date.getMonth()+1;
     
