@@ -13,7 +13,8 @@ const ListsUl = styled.ul`
   justify-content: space-between;
   padding: 15px 550px 0;
   border-bottom: 3px solid #e0e0e0;
-`;
+`
+
 const ListsUlResponsive = styled.ul`
   display: flex;
   margin: 0;
