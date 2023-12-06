@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import "../styled.css";
-import { Button } from "./button";
+import { Button, ButtonResponsive } from "./button";
 import firebase from "firebase";
 import { useState } from "react";
 import MediaQuery from "react-responsive";
@@ -117,9 +117,9 @@ const IncomeList = ({ incomes }) => {
               <GreenLi className="listLi_responsive">
                 ¥{income.money.toLocaleString()}円
               </GreenLi>
-              <SpendingButton onClick={() => incomesDelete(income.id)}>
+              <ButtonResponsive onClick={() => incomesDelete(income.id)}>
                 削除
-              </SpendingButton>
+              </ButtonResponsive>
             </ul>
           );
         })}
